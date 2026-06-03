@@ -124,7 +124,7 @@ body {
     flex: 1 0 auto;
     padding: 40px 20px;
 }
-
+  /*css отвечает за добавление фотографий и карточек*/
 .hero {
     display: flex;
     flex-direction: column;
@@ -245,5 +245,24 @@ body {
     padding: 20px;
     font-size: 14px;
     transition: var(--transition);
+    color: var(--text-color);
+}
+
+/*стиль для кнопки удалить*/
+
+.delete-from-greenhouse-btn {
+    background-color: #a3b19b !important;
+    color: #ffffff;
+}
+
+.delete-from-greenhouse-btn:hover {
+    background-color: #c25953 !important; 
+}
+
+.greenhouse-subtitle {
+    text-align: center;
+    font-size: 16px;
+    opacity: 0.7;
+    margin-top: 20px;
     color: var(--text-color);
 }

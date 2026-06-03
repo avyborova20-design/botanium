@@ -1,19 +1,60 @@
+class Plant {
+    constructor(id, title, desc, tag1, tag2, img) {
+        this.id = id;
+        this.title = title;
+        this.desc = desc;
+        this.tag1 = tag1;
+        this.tag2 = tag2;
+        this.img = img;
+    }
+
+    createCardElement() {
+        const article = document.createElement('article');
+        article.classList.add('plant-card');
+        article.setAttribute('data-id', this.id);
+
+        article.innerHTML = 
+            '<img src="' + this.img + '" alt="' + this.title + '" class="plant-card__img">' +
+            '<div class="plant-card__content">' +
+                '<h3 class="plant-card__title">' + this.title + '</h3>' +
+                '<p class="plant-card__desc">' + this.desc + '</p>' +
+                '<div class="plant-card__tags">' +
+                    '<span class="tag">' + this.tag1 + '</span>' +
+                    '<span class="tag">' + this.tag2 + '</span>' +
+                '</div>' +
+                '<button class="plant-card__btn add-to-greenhouse-btn">В оранжерею</button>' +
+            '</div>';
+
+        return article;
+    }
+}
+
+const plantsDatabase = [
+    new Plant(1, "Монстера Делициоза", "Тропическая лиана с крупными резными листьями.", "Полутень", "Умеренный полив", "https://topplant.ru/assets/images/products/4603/monstera-deliciosa-27-150-2.jpg"),
+    new Plant(2, "Эхеверия (Суккулент)", "Каменная роза, не требующая частого внимания.", "Яркое солнце", "Редкий полив", "https://grinoteka.ru/upload/iblock/7d9/fp9epuaseqg1rqvn416pbyj2z0089331.jpg"),
+    new Plant(3, "Спатифиллум", "Популярное комнатное растение «Женское счастье».", "Рассеянный свет", "Влаголюбивое", "https://orchidea-shop.ru/base/data/5791mid.jpg"),
+    new Plant(4, "Фикус Бенджамина", "Изящное деревце с тонкими ветвями и мелкими листьями.", "Яркий свет", "Умеренный полив", "https://liodoro.ru/wp-content/uploads/2023/06/fikus-bendzhamina-piramida-miks.jpg"),
+    new Plant(5, "Замиокулькас", "Легендарное «долларовое дерево». Крайне выносливое.", "Любой свет", "Редкий полив", "https://static.insales-cdn.com/images/products/1/5995/829970283/IMG_0959.jpeg"),
+    new Plant(6, "Фиалка (Сенполия)", "Компактное растение с бархатистыми яркими цветами.", "Рассеянный свет", "Полив через поддон", "https://www.roza4u.ru/image/cache/catalog/gorshechnye-cvety/Senpoliya_sirenevaya_1-600x600.jpg")
+];
+
+
 document.addEventListener('DOMContentLoaded', () => {
     const themeToggleBtn = document.getElementById('theme-toggle');
-    const currentTheme = localStorage.getItem('theme');
+    const currentTheme = localStorage.getItem('theme') || 'light';
     
-    if (currentTheme) {
-        document.documentElement.setAttribute('data-theme', currentTheme);
-        if (currentTheme === 'dark') {
-            themeToggleBtn.textContent = 'Светлая тема';
-        }
+    document.documentElement.setAttribute('data-theme', currentTheme);
+    if (currentTheme === 'dark') {
+        themeToggleBtn.textContent = 'Светлая тема';
+    } else {
+        themeToggleBtn.textContent = 'Сменить тему';
     }
 
     themeToggleBtn.addEventListener('click', () => {
         let theme = document.documentElement.getAttribute('data-theme');
         
         if (theme === 'dark') {
-            document.documentElement.removeAttribute('data-theme');
+            document.documentElement.setAttribute('data-theme', 'light');
             localStorage.setItem('theme', 'light');
             themeToggleBtn.textContent = 'Сменить тему';
         } else {
@@ -22,4 +63,72 @@ document.addEventListener('DOMContentLoaded', () => {
             themeToggleBtn.textContent = 'Светлая тема';
         }
     });
+
+    const catalogGrid = document.getElementById('catalog-grid');
+   
+    if (catalogGrid) {
+        plantsDatabase.forEach(plant => {
+            const cardElement = plant.createCardElement();
+            catalogGrid.appendChild(cardElement);
+        });
+
+        catalogGrid.addEventListener('click', (e) => {
+            if (e.target.classList.contains('add-to-greenhouse-btn')) {
+                const card = e.target.closest('.plant-card');
+                const plantId = card.getAttribute('data-id');
+                
+                let greenhouse = JSON.parse(localStorage.getItem('greenhouse')) || [];
+                
+                if (!greenhouse.includes(plantId)) {
+                    greenhouse.push(plantId);
+                    localStorage.setItem('greenhouse', JSON.stringify(greenhouse));
+                    alert('Растение успешно добавлено в вашу оранжерею!');
+                } else {
+                    alert('Это растение уже есть в вашей оранжерее!');
+                }
+            }
+        });
+    }
+
+    const greenhouseGrid = document.getElementById('greenhouse-grid');
+    const emptyMsg = document.getElementById('greenhouse-empty-msg');
+
+    if (greenhouseGrid) {
+        let greenhouse = JSON.parse(localStorage.getItem('greenhouse')) || [];
+
+        if (greenhouse.length > 0) {
+            if (emptyMsg) emptyMsg.style.display = 'none';
+
+            greenhouse.forEach(savedId => {
+                const foundPlant = plantsDatabase.find(plant => plant.id == savedId);
+                
+                if (foundPlant) {
+                    const cardElement = foundPlant.createCardElement();
+                    const btn = cardElement.querySelector('.plant-card__btn');
+                    btn.textContent = 'Удалить';
+                    btn.classList.remove('add-to-greenhouse-btn');
+                    btn.classList.add('delete-from-greenhouse-btn');
+                    
+                    greenhouseGrid.appendChild(cardElement);
+                }
+            });
+        }
+
+        greenhouseGrid.addEventListener('click', (e) => {
+            if (e.target.classList.contains('delete-from-greenhouse-btn')) {
+                const card = e.target.closest('.plant-card');
+                const plantId = card.getAttribute('data-id');
+                
+                let greenhouse = JSON.parse(localStorage.getItem('greenhouse')) || [];
+                greenhouse = greenhouse.filter(id => id != plantId);
+                
+                localStorage.setItem('greenhouse', JSON.stringify(greenhouse));
+                card.remove();
+                
+                if (greenhouse.length === 0 && emptyMsg) {
+                    emptyMsg.style.display = 'block';
+                }
+            }
+        });
+    }
 });

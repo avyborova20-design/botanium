@@ -1,3 +1,4 @@
+// JS-Приложение 1
 class Plant {
     constructor(id, title, desc, tag1, tag2, img) {
         this.id = id;
@@ -132,3 +133,62 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
+
+// JS-Приложение 2
+const calcForm = document.getElementById('plant-calc-form');
+    const calcResults = document.getElementById('calc-results');
+
+    if (calcForm && calcResults) {
+        calcForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const plantName = document.getElementById('plant-name-input').value.trim();
+            const plantType = document.getElementById('plant-type').value;
+            const currentDiam = parseFloat(document.getElementById('current-diameter').value);
+
+            let newDiam = currentDiam + 3;
+
+            if (plantType === 'monstera') {
+                newDiam = currentDiam + 5;
+            } else if (plantType === 'orchid') {
+                newDiam = currentDiam + 2;
+            }
+
+            const h = newDiam;
+            const R = newDiam / 2;
+            const r = R * 0.8;
+            
+            const totalVolumeCm3 = (1 / 3) * Math.PI * h * (R * R + R * r + r * r);
+            const totalVolumeLitres = totalVolumeCm3 / 1000;
+
+            let soilVolume = 0;
+            let drainVolume = 0;
+
+            if (plantType === 'succulent') {
+                drainVolume = totalVolumeLitres * 0.35;
+                soilVolume = totalVolumeLitres * 0.65;
+            } else if (plantType === 'orchid') {
+                drainVolume = 0;
+                soilVolume = totalVolumeLitres;
+            } else if (plantType === 'monstera') {
+                drainVolume = totalVolumeLitres * 0.10;
+                soilVolume = totalVolumeLitres * 0.90;
+            } else {
+                drainVolume = totalVolumeLitres * 0.15;
+                soilVolume = totalVolumeLitres * 0.85;
+            }
+
+            const nameContainer = document.getElementById('res-plant-name');
+            if (plantName) {
+                nameContainer.textContent = 'для "' + plantName + '"';
+            } else {
+                nameContainer.textContent = '';
+            }
+
+            document.getElementById('res-pot').textContent = newDiam;
+            document.getElementById('res-soil').textContent = soilVolume.toFixed(1);
+            document.getElementById('res-drain').textContent = drainVolume.toFixed(1);
+
+            calcResults.classList.remove('hidden');
+        });
+    }

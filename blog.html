@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Блог и Калькулятор — Ботаниум</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <header class="header">
+        <div class="header__container">
+            <a href="index.html" class="header__logo">Ботаниум</a>
+            <nav class="header__nav">
+                <ul class="header__menu">
+                    <li><a href="index.html" class="header__link">Главная</a></li>
+                    <li><a href="catalog.html" class="header__link">Каталог цветов</a></li>
+                    <li><a href="plant-single.html" class="header__link">Гайд по уходу</a></li>
+                    <li><a href="blog.html" class="header__link active">Блог</a></li>
+                    <li><a href="calendar.html" class="header__link">Календарь</a></li>
+                    <li><a href="profile.html" class="header__link">Моя оранжерея</a></li>
+                </ul>
+            </nav>
+            <button id="theme-toggle" class="theme-toggle-btn">Сменить тему</button>
+        </div>
+    </header>
+
+    <main class="main-content blog-main">
+        <div class="blog-center-wrapper">
+            
+            <!-- Блок со статьями -->
+            <section class="blog-section">
+                <h1 class="section-title">Полезные статьи о растениях</h1>
+                <div class="blog-grid">
+                    <article class="blog-card">
+                        <h3 class="blog-card__title">Когда нужно пересаживать цветы?</h3>
+                        <p class="blog-card__text">Главные признаки: корни начали вылезать из дренажных отверстий, вода застаивается на поверхности, а растение остановилось в росте. Лучшее время для пересадки — весна.</p>
+                    </article>
+                    <article class="blog-card">
+                        <h3 class="blog-card__title">Секреты правильного дренажа</h3>
+                        <p class="blog-card__text">Дренажный слой обязателен для 90% комнатных растений. Он защищает корни от загнивания при случайном переливе. Используйте керамзит средней фракции слоем 2-3 см.</p>
+                    </article>
+                </div>
+            </section>
+
+            <!-- Блок интересные факты -->
+            <section class="facts-section">
+                <h2 class="section-title">Удивительные факты о цветах</h2>
+                <div class="facts-grid">
+                    <div class="fact-item">
+                        <span class="fact-icon">🎵</span>
+                        <p><strong>Музыкальный рост:</strong> Некоторые исследования показывают, что растения растут быстрее, если включают классическую музыку.</p>
+                    </div>
+                    <div class="fact-item">
+                        <span class="fact-icon">💨</span>
+                        <p><strong>Чистый воздух:</strong> Хлорофитум способен за сутки очистить воздух в комнате от 80% болезнетворных микроорганизмов.</p>
+                    </div>
+                    <div class="fact-item">
+                        <span class="fact-icon">💧</span>
+                        <p><strong>Защитная влага:</strong> Крупные листья монстеры способны «плакать» каплями воды перед дождем из-за повышенной влажности воздуха.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Блок калькулятор -->
+            <section class="calculator-section">
+                <h2 class="section-title">Калькулятор горшка и грунта</h2>
+                <div class="calc-box">
+                    <p class="calc-box__desc">Введите параметры вашего растения, чтобы рассчитать идеальный объем материалов для успешной пересадки.</p>
+                    
+                    <form id="plant-calc-form" class="calc-form">
+                        <div class="form-group">
+                            <label for="plant-name-input">Название растения:</label>
+                            <input type="text" id="plant-name-input" placeholder="Например: Фикус, Фиалка..." autocomplete="off">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="plant-type">Категория / Тип растения:</label>
+                              <select id="plant-type" required>
+                                     <option value="standard">Обычный цветок / Не знаю точно</option>
+                                     <option value="succulent">Суккуленты / Кактусы (нужен тонкий слой грунта)</option>
+                                     <option value="monstera">Крупные лианы / Монстеры (нужен глубокий горшок)</option>
+                                      <option value="orchid">Орхидеи (нужен специальный субстрат/кора)</option>
+                                </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="current-diameter">Текущий диаметр горшка (в см):</label>
+                            <input type="number" id="current-diameter" min="5" max="100" value="12" required>
+                        </div>
+
+                        <button type="submit" class="plant-card__btn calc-btn">Рассчитать параметры</button>
+                    </form>
+
+                    <div id="calc-results" class="calc-results hidden">
+                        <h3>Рекомендации по пересадке <span id="res-plant-name"></span>:</h3>
+                        <p>Новый диаметр горшка: <strong id="res-pot">--</strong> см</p>
+                        <p>Необходимый объем грунта: <strong id="res-soil">--</strong> л</p>
+                        <p>Необходимый объем дренажа: <strong id="res-drain">--</strong> л</p>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2026 Ботаниум. Все права защищены.</p>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

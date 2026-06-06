@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Календарь садовода — Ботаниум</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <header class="header">
+        <div class="header__container">
+            <a href="index.html" class="header__logo">Ботаниум</a>
+            <nav class="header__nav">
+                <ul class="header__menu">
+                    <li><a href="index.html" class="header__link">Главная</a></li>
+                    <li><a href="catalog.html" class="header__link">Каталог цветов</a></li>
+                    <li><a href="plant-single.html" class="header__link">Гайд по уходу</a></li>
+                    <li><a href="blog.html" class="header__link">Блог</a></li>
+                    <li><a href="calendar.html" class="header__link active">Календарь</a></li>
+                    <li><a href="profile.html" class="header__link">Моя оранжерея</a></li>
+                </ul>
+            </nav>
+            <button id="theme-toggle" class="theme-toggle-btn">Сменить тему</button>
+        </div>
+    </header>
+
+    <main class="main-content calendar-main">
+        <div class="calendar-wrapper">
+            
+            <section class="seasons-section">
+                <h1 class="section-title">Сезонный календарь подкормок</h1>
+               <div class="blog-grid">
+                    <article class="blog-card">
+                        <h3 class="blog-card__title">Весна — Время активного роста</h3>
+                        <p class="blog-card__text">С марта по май растения просыпаются. Подкармливайте их азотными удобрениями каждые 2 недели для быстрого роста новых листьев и побегов.</p>
+                    </article>
+                    <article class="blog-card">
+                        <h3 class="blog-card__title">Лето — Период цветения</h3>
+                        <p class="blog-card__text">В июне-августе цветам нужны фосфор и калий. Они стимулируют бутонизацию. Полив максимальный, подкормки раз в 10-14 дней.</p>
+                    </article>
+                    <article class="blog-card">
+                        <h3 class="blog-card__title">Осень — Подготовка к покою</h3>
+                        <p class="blog-card__text">В сентябре-ноябре световой день сокращается. Постепенно уменьшайте полив. Подкормки сокращают до 1 раза в месяц, полностью исключая азот.</p>
+                    </article>
+                    <article class="blog-card">
+                        <h3 class="blog-card__title">Зима — Время отдыха</h3>
+                        <p class="blog-card__text">С декабря по февраль большинство растений спит. Удобрения противопоказаны. Главная задача — беречь цветы от сквозняков и сухого воздуха батарей.</p>
+                    </article>
+                </div>
+            </section>
+                    <section class="weather-section">
+                <h2 class="section-title">Лунный помощник цветовода</h2>
+                <div class="calc-box">
+                    <p class="calc-box__desc">Интерактивный лунный календарь. Нажмите кнопку, чтобы узнать информацию.  </p>
+                    
+                    <div class="weather-actions">
+                        <button id="get-weather-btn" class="plant-card__btn calc-btn">Узнать фазу Луны и советы</button>
+                    </div>
+
+                    <div id="weather-results" class="calc-results hidden">
+                        <h3>Текущий лунный статус:</h3>
+                        <p>Освещенность Луны: <strong><span id="weather-temp">--</span>%</strong></p>
+                        <p>Текущая фаза: <span id="moon-icon" style="font-size: 24px; margin-right: 5px;"></span> <strong id="weather-wind">--</strong></p>
+                        <div class="weather-tip-box" id="weather-tip"></div>
+                    </div>
+                </div>
+            </section>
+
+
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2026 Ботаниум. Все права защищены.</p>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

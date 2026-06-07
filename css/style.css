@@ -515,3 +515,32 @@ body {
     line-height: 1.6;
     box-shadow: 0 2px 10px rgba(0,0,0,0.02);
 }
+
+/*стиль для гайда по уходу*/
+.guide-main {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    width: 100%;
+    padding: 40px 20px;
+}
+
+.guide-hero {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.guide-cover-img {
+    width: 100%;
+    max-width: 500px;
+    height: auto; 
+    object-fit: contain;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    margin-top: 10px;
+}
+
+.guide-content {
+    width: 100%;
+}

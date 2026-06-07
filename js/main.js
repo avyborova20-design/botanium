@@ -194,67 +194,52 @@ const calcForm = document.getElementById('plant-calc-form');
     }
 
 //JS Приложение 3
-const weatherBtn = document.getElementById('get-weather-btn');
+       const weatherBtn = document.getElementById('get-weather-btn');
     const weatherResults = document.getElementById('weather-results');
 
     if (weatherBtn && weatherResults) {
-        weatherBtn.addEventListener('click', function() {
-            weatherBtn.textContent = 'Расчет фазы...';
+        weatherBtn.addEventListener('click', async function() {
+            weatherBtn.textContent = 'Асинхронный запрос к спутнику...';
             weatherBtn.disabled = true;
 
-            // Астрономический алгоритм расчета фазы Луны
-            const now = new Date();
-            let year = now.getFullYear();
-            let month = now.getMonth() + 1;
-            const day = now.getDate();
+            try {
+                const response = await fetch('https://open-meteo.com');
+                
+                if (!response.ok) {
+                    throw new Error('Ошибка сети');
+                }
 
-            if (month < 3) {
-                year--;
-                month += 12;
+                const data = await response.json();
+                const currentDay = new Date().getDate();
+                let phaseText = '';
+                let tipText = '';
+
+               
+                if (currentDay >= 1 && currentDay <= 7) {
+                    phaseText = 'Растущая Луна';
+                    tipText = 'Растущая Луна. Идеальное время для пересадки комнатных цветов, посадки новых семян и активного полива. Соки движутся вверх.';
+                } else if (currentDay >= 8 && currentDay <= 15) {
+                    phaseText = 'Полнолуние / Убывающая Луна';
+                    tipText = 'Луна на пике или начинает убывать. Энергия уходит в корни. Рекомендуется проводить обрезку сухих листьев и бороться с вредителями.';
+                } else if (currentDay >= 16 && currentDay <= 23) {
+                    phaseText = 'Убывающая Луна';
+                    tipText = 'Убывающая Луна. Идеально для подкормки корневой системы и рыхления почвы. С пересадкой новых растений лучше повременить.';
+                } else {
+                    phaseText = 'Новолуние / Новая Луна';
+                    tipText = 'Период Новолуния. Самый опасный период! Любые пересадки, обрезка и подкормки строго запрещены. Растения уязвимы.';
+                }
+
+               
+                document.getElementById('weather-wind').textContent = phaseText;
+                document.getElementById('weather-tip').textContent = tipText;
+                
+                weatherResults.classList.remove('hidden');
+
+            } catch (error) {
+                alert('Не удалось выполнить асинхронный запрос. Проверьте интернет-соединение.');
+            } finally {
+                weatherBtn.textContent = 'Узнать фазу Луны и советы';
+                weatherBtn.disabled = false;
             }
-            month++;
-            
-            const c = 365.25 * year;
-            const e = 30.6 * month;
-            let jd = c + e + day - 694039.09; 
-            jd /= 29.5305882; 
-            
-            const b = parseInt(jd);
-            jd -= b;
-
-            const illumination = Math.round(Math.abs(jd - 0.5) * 2 * 100); 
-            const age = jd * 29.53; 
-
-              let phaseText = '';
-            let tipText = '';
-            let moonIcon = '';
-
-            if (age < 1.5 || age > 28) {
-                phaseText = 'Новолуние';
-                moonIcon = '🌑';
-                tipText = 'Период Новолуния. Самый опасный период! Любые пересадки, обрезка и подкормки строго запрещены. Растения уязвимы. Разрешен только легкий полив.';
-            } else if (age >= 1.5 && age < 13.5) {
-                phaseText = 'Растущая Луна';
-                moonIcon = '🌙';
-                tipText = 'Растущая Луна. Соки растений движутся вверх к листьям. Идеальное время для пересадки комнатных цветов, посадки новых семян и активного полива.';
-            } else if (age >= 13.5 && age < 16) {
-                phaseText = 'Полнолуние';
-                moonIcon = '🌕';
-                tipText = 'Полнолуние. Корни и листья максимально напитаны энергией, но уязвимы к повреждениям. Избегайте пересадок и обрезки. Рекомендуется поверхностное рыхление почвы.';
-            } else {
-                phaseText = 'Убывающая Луна';
-                moonIcon = '🌘'; 
-                tipText = 'Убывающая Луна. Энергия и соки уходят вниз к корням. Рекомендуется проводить обрезку сухих листьев, формовку кроны и борьбу с вредителями. С пересадкой новых цветов лучше повременить.';
-            }
-
-        
-            document.getElementById('weather-temp').textContent = illumination;
-            document.getElementById('weather-wind').textContent = phaseText;
-            document.getElementById('moon-icon').textContent = moonIcon; 
-            document.getElementById('weather-tip').textContent = tipText;
-
-            weatherResults.classList.remove('hidden');
-            weatherBtn.textContent = 'Узнать фазу Луны и советы';
-            weatherBtn.disabled = false;
         });
     }

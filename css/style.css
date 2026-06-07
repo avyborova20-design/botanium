@@ -544,3 +544,70 @@ body {
 .guide-content {
     width: 100%;
 }
+/*медиа запросы*/
+@media (max-width: 768px) {
+
+    .header__container {
+        display: flex;
+        flex-direction: column !important;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 15px 10px;
+        gap: 15px;
+    }
+
+    .header__logo {
+        font-size: 22px;
+        font-weight: 700;
+        margin: 0;
+        text-align: center;
+    }
+
+    .header__logo::before {
+        content: '🌿'; 
+    }
+    
+    .header__nav {
+        width: 100%;
+        margin: 0;
+        overflow: visible;
+        white-space: normal;
+    }
+
+    .header__menu {
+        display: flex;
+        flex-direction: row !important;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        gap: 12px 18px;
+        padding: 0;
+        list-style: none;
+    }
+    .header__link {
+        font-size: 15px;
+        font-weight: 500;
+        padding: 4px 0;
+        background: none;
+        border: none;
+        border-radius: 0;
+        color: var(--text-color);
+    }
+
+    .header__link::after {
+        display: block;
+        height: 2px;
+    }
+
+    .theme-toggle-btn {
+        display: inline-block;
+        width: auto;
+        max-width: 160px;
+        padding: 8px 16px;
+        font-size: 13px;
+        border-radius: 20px;
+        margin: 5px auto 0 auto;
+        order: 4;
+    }
+}

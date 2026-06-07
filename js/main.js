@@ -46,9 +46,9 @@ document.addEventListener('DOMContentLoaded', () => {
     
     document.documentElement.setAttribute('data-theme', currentTheme);
     if (currentTheme === 'dark') {
-        themeToggleBtn.textContent = 'Светлая тема';
+        themeToggleBtn.textContent = '☀️';
     } else {
-        themeToggleBtn.textContent = 'Сменить тему';
+        themeToggleBtn.textContent = '🌙';
     }
 
     themeToggleBtn.addEventListener('click', () => {
@@ -57,11 +57,11 @@ document.addEventListener('DOMContentLoaded', () => {
         if (theme === 'dark') {
             document.documentElement.setAttribute('data-theme', 'light');
             localStorage.setItem('theme', 'light');
-            themeToggleBtn.textContent = 'Сменить тему';
+            themeToggleBtn.textContent = '🌙';
         } else {
             document.documentElement.setAttribute('data-theme', 'dark');
             localStorage.setItem('theme', 'dark');
-            themeToggleBtn.textContent = 'Светлая тема';
+            themeToggleBtn.textContent = '☀️';
         }
     });
 
@@ -241,5 +241,16 @@ const calcForm = document.getElementById('plant-calc-form');
                 weatherBtn.textContent = 'Узнать фазу Луны и советы';
                 weatherBtn.disabled = false;
             }
+            if (typeof ScrollReveal !== 'undefined') {
+        const sr = ScrollReveal({
+            distance: '40px',
+            duration: 1000,
+            delay: 200,
+            reset: false
+        });
+
+        sr.reveal('.hero__title, .section-title', { origin: 'top' });
+        sr.reveal('.plant-card, .blog-card, .calc-box', { origin: 'bottom', interval: 150 });
+    }
         });
     }

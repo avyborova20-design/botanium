@@ -31,7 +31,7 @@ class Plant {
 }
 
 const plantsDatabase = [
-    new Plant(1, "Монстера Делициоза", "Тропическая лиана с крупными резными листьями.", "Полутень", "Умеренный полив", "https://topplant.ru/assets/images/products/4603/monstera-deliciosa-27-150-2.jpg"),
+    new Plant(1, "Монстера Делициоза", "Тропическая лиана с крупными резными листьями.", "Полутень", "Умеренный полив", "img/monstera-deliciosa.jpg"),
     new Plant(2, "Эхеверия (Суккулент)", "Каменная роза, не требующая частого внимания.", "Яркое солнце", "Редкий полив", "https://grinoteka.ru/upload/iblock/7d9/fp9epuaseqg1rqvn416pbyj2z0089331.jpg"),
     new Plant(3, "Спатифиллум", "Популярное комнатное растение «Женское счастье».", "Рассеянный свет", "Влаголюбивое", "https://orchidea-shop.ru/base/data/5791mid.jpg"),
     new Plant(4, "Фикус Бенджамина", "Изящное деревце с тонкими ветвями и мелкими листьями.", "Яркий свет", "Умеренный полив", "https://liodoro.ru/wp-content/uploads/2023/06/fikus-bendzhamina-piramida-miks.jpg"),
@@ -198,12 +198,6 @@ const moonBtn = document.getElementById('get-moon-btn');
 const moonResults = document.getElementById('moon-results');
 
 if (moonBtn && moonResults) {
-
-    if (typeof ScrollReveal !== 'undefined') {
-        const sr = ScrollReveal({ distance: '40px', duration: 1000, delay: 200, reset: false });
-        sr.reveal('.hero__title, .section-title', { origin: 'top' });
-        sr.reveal('.plant-card, .blog-card, .calc-box', { origin: 'bottom', interval: 150 });
-    }
 
     // Функция расчета возраста Луны
     function calculateMoonAge(date = new Date()) {

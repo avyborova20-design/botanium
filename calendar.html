@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="ru">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Календарь садовода — Ботаниум</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
+
 <body>
 
     <header class="header">
@@ -27,42 +29,50 @@
 
     <main class="main-content calendar-main">
         <div class="calendar-wrapper">
-            
+
             <section class="seasons-section">
                 <h1 class="section-title">Сезонный календарь подкормок</h1>
-               <div class="blog-grid">
+                <div class="blog-grid">
                     <article class="blog-card">
                         <h3 class="blog-card__title">Весна — Время активного роста</h3>
-                        <p class="blog-card__text">С марта по май растения просыпаются. Подкармливайте их азотными удобрениями каждые 2 недели для быстрого роста новых листьев и побегов.</p>
+                        <p class="blog-card__text">С марта по май растения просыпаются. Подкармливайте их азотными
+                            удобрениями каждые 2 недели для быстрого роста новых листьев и побегов.</p>
                     </article>
                     <article class="blog-card">
                         <h3 class="blog-card__title">Лето — Период цветения</h3>
-                        <p class="blog-card__text">В июне-августе цветам нужны фосфор и калий. Они стимулируют бутонизацию. Полив максимальный, подкормки раз в 10-14 дней.</p>
+                        <p class="blog-card__text">В июне-августе цветам нужны фосфор и калий. Они стимулируют
+                            бутонизацию. Полив максимальный, подкормки раз в 10-14 дней.</p>
                     </article>
                     <article class="blog-card">
                         <h3 class="blog-card__title">Осень — Подготовка к покою</h3>
-                        <p class="blog-card__text">В сентябре-ноябре световой день сокращается. Постепенно уменьшайте полив. Подкормки сокращают до 1 раза в месяц, полностью исключая азот.</p>
+                        <p class="blog-card__text">В сентябре-ноябре световой день сокращается. Постепенно уменьшайте
+                            полив. Подкормки сокращают до 1 раза в месяц, полностью исключая азот.</p>
                     </article>
                     <article class="blog-card">
                         <h3 class="blog-card__title">Зима — Время отдыха</h3>
-                        <p class="blog-card__text">С декабря по февраль большинство растений спит. Удобрения противопоказаны. Главная задача — беречь цветы от сквозняков и сухого воздуха батарей.</p>
+                        <p class="blog-card__text">С декабря по февраль большинство растений спит. Удобрения
+                            противопоказаны. Главная задача — беречь цветы от сквозняков и сухого воздуха батарей.</p>
                     </article>
                 </div>
             </section>
-                       <section class="weather-section">
+            <section class="moon-section">
                 <h2 class="section-title">Лунный помощник цветовода</h2>
                 <div class="calc-box">
-                    <p class="calc-box__desc">Нажмите кнопку, чтобы рассчитать текущую фазу Луны и узнать рекомендации по уходу за растениями на сегодня.</p>
-                    
-                    <div class="weather-actions">
-                        <button id="get-weather-btn" class="plant-card__btn calc-btn">Узнать фазу Луны и советы</button>
+                    <p class="calc-box__desc">Нажмите кнопку, чтобы рассчитать текущую фазу Луны и узнать рекомендации
+                        по уходу за растениями на сегодня.</p>
+
+                    <div class="moon-actions">
+                        <button id="get-moon-btn" class="plant-card__btn calc-btn">Узнать фазу Луны и советы</button>
                     </div>
 
-                      <div id="weather-results" class="calc-results hidden">
+                    <div id="moon-results" class="calc-results hidden">
                         <h3>Текущий лунный статус:</h3>
                         <p>Статус подключения: <strong>200 OK</strong></p>
-                        <p>Текущая фаза: <strong id="weather-wind">--</strong></p>
-                        <div class="weather-tip-box" id="weather-tip"></div>
+
+                        <p>Текущая фаза: <span id="moon-icon" style="margin-right: 8px;"></span><strong
+                                id="moon-phase">--</strong></p>
+
+                        <div class="moon-tip-box" id="moon-tip"></div>
                     </div>
                 </div>
             </section>
@@ -78,4 +88,5 @@
     <script src="https://unpkg.com/scrollreveal"></script>
     <script src="js/main.js"></script>
 </body>
+
 </html>

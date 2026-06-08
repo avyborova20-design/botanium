@@ -14,16 +14,16 @@ class Plant {
         article.classList.add('plant-card');
         article.setAttribute('data-id', this.id);
 
-        article.innerHTML = 
+        article.innerHTML =
             '<img src="' + this.img + '" alt="' + this.title + '" class="plant-card__img">' +
             '<div class="plant-card__content">' +
-                '<h3 class="plant-card__title">' + this.title + '</h3>' +
-                '<p class="plant-card__desc">' + this.desc + '</p>' +
-                '<div class="plant-card__tags">' +
-                    '<span class="tag">' + this.tag1 + '</span>' +
-                    '<span class="tag">' + this.tag2 + '</span>' +
-                '</div>' +
-                '<button class="plant-card__btn add-to-greenhouse-btn">В оранжерею</button>' +
+            '<h3 class="plant-card__title">' + this.title + '</h3>' +
+            '<p class="plant-card__desc">' + this.desc + '</p>' +
+            '<div class="plant-card__tags">' +
+            '<span class="tag">' + this.tag1 + '</span>' +
+            '<span class="tag">' + this.tag2 + '</span>' +
+            '</div>' +
+            '<button class="plant-card__btn add-to-greenhouse-btn">В оранжерею</button>' +
             '</div>';
 
         return article;
@@ -43,7 +43,7 @@ const plantsDatabase = [
 document.addEventListener('DOMContentLoaded', () => {
     const themeToggleBtn = document.getElementById('theme-toggle');
     const currentTheme = localStorage.getItem('theme') || 'light';
-    
+
     document.documentElement.setAttribute('data-theme', currentTheme);
     if (currentTheme === 'dark') {
         themeToggleBtn.textContent = '☀️';
@@ -53,7 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     themeToggleBtn.addEventListener('click', () => {
         let theme = document.documentElement.getAttribute('data-theme');
-        
+
         if (theme === 'dark') {
             document.documentElement.setAttribute('data-theme', 'light');
             localStorage.setItem('theme', 'light');
@@ -66,7 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     const catalogGrid = document.getElementById('catalog-grid');
-   
+
     if (catalogGrid) {
         plantsDatabase.forEach(plant => {
             const cardElement = plant.createCardElement();
@@ -77,9 +77,9 @@ document.addEventListener('DOMContentLoaded', () => {
             if (e.target.classList.contains('add-to-greenhouse-btn')) {
                 const card = e.target.closest('.plant-card');
                 const plantId = card.getAttribute('data-id');
-                
+
                 let greenhouse = JSON.parse(localStorage.getItem('greenhouse')) || [];
-                
+
                 if (!greenhouse.includes(plantId)) {
                     greenhouse.push(plantId);
                     localStorage.setItem('greenhouse', JSON.stringify(greenhouse));
@@ -102,14 +102,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
             greenhouse.forEach(savedId => {
                 const foundPlant = plantsDatabase.find(plant => plant.id == savedId);
-                
+
                 if (foundPlant) {
                     const cardElement = foundPlant.createCardElement();
                     const btn = cardElement.querySelector('.plant-card__btn');
                     btn.textContent = 'Удалить';
                     btn.classList.remove('add-to-greenhouse-btn');
                     btn.classList.add('delete-from-greenhouse-btn');
-                    
+
                     greenhouseGrid.appendChild(cardElement);
                 }
             });
@@ -119,13 +119,13 @@ document.addEventListener('DOMContentLoaded', () => {
             if (e.target.classList.contains('delete-from-greenhouse-btn')) {
                 const card = e.target.closest('.plant-card');
                 const plantId = card.getAttribute('data-id');
-                
+
                 let greenhouse = JSON.parse(localStorage.getItem('greenhouse')) || [];
                 greenhouse = greenhouse.filter(id => id != plantId);
-                
+
                 localStorage.setItem('greenhouse', JSON.stringify(greenhouse));
                 card.remove();
-                
+
                 if (greenhouse.length === 0 && emptyMsg) {
                     emptyMsg.style.display = 'block';
                 }
@@ -136,121 +136,147 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // JS-Приложение 2
 const calcForm = document.getElementById('plant-calc-form');
-    const calcResults = document.getElementById('calc-results');
+const calcResults = document.getElementById('calc-results');
 
-    if (calcForm && calcResults) {
-        calcForm.addEventListener('submit', function(e) {
-            e.preventDefault();
+if (calcForm && calcResults) {
+    calcForm.addEventListener('submit', function (e) {
+        e.preventDefault();
 
-            const plantName = document.getElementById('plant-name-input').value.trim();
-            const plantType = document.getElementById('plant-type').value;
-            const currentDiam = parseFloat(document.getElementById('current-diameter').value);
+        const plantName = document.getElementById('plant-name-input').value.trim();
+        const plantType = document.getElementById('plant-type').value;
+        const currentDiam = parseFloat(document.getElementById('current-diameter').value);
 
-            let newDiam = currentDiam + 3;
+        let newDiam = currentDiam + 3;
 
-            if (plantType === 'monstera') {
-                newDiam = currentDiam + 5;
-            } else if (plantType === 'orchid') {
-                newDiam = currentDiam + 2;
-            }
+        if (plantType === 'monstera') {
+            newDiam = currentDiam + 5;
+        } else if (plantType === 'orchid') {
+            newDiam = currentDiam + 2;
+        }
 
-            const h = newDiam;
-            const R = newDiam / 2;
-            const r = R * 0.8;
-            
-            const totalVolumeCm3 = (1 / 3) * Math.PI * h * (R * R + R * r + r * r);
-            const totalVolumeLitres = totalVolumeCm3 / 1000;
+        const h = newDiam;
+        const R = newDiam / 2;
+        const r = R * 0.8;
 
-            let soilVolume = 0;
-            let drainVolume = 0;
+        const totalVolumeCm3 = (1 / 3) * Math.PI * h * (R * R + R * r + r * r);
+        const totalVolumeLitres = totalVolumeCm3 / 1000;
 
-            if (plantType === 'succulent') {
-                drainVolume = totalVolumeLitres * 0.35;
-                soilVolume = totalVolumeLitres * 0.65;
-            } else if (plantType === 'orchid') {
-                drainVolume = 0;
-                soilVolume = totalVolumeLitres;
-            } else if (plantType === 'monstera') {
-                drainVolume = totalVolumeLitres * 0.10;
-                soilVolume = totalVolumeLitres * 0.90;
-            } else {
-                drainVolume = totalVolumeLitres * 0.15;
-                soilVolume = totalVolumeLitres * 0.85;
-            }
+        let soilVolume = 0;
+        let drainVolume = 0;
 
-            const nameContainer = document.getElementById('res-plant-name');
-            if (plantName) {
-                nameContainer.textContent = 'для "' + plantName + '"';
-            } else {
-                nameContainer.textContent = '';
-            }
+        if (plantType === 'succulent') {
+            drainVolume = totalVolumeLitres * 0.35;
+            soilVolume = totalVolumeLitres * 0.65;
+        } else if (plantType === 'orchid') {
+            drainVolume = 0;
+            soilVolume = totalVolumeLitres;
+        } else if (plantType === 'monstera') {
+            drainVolume = totalVolumeLitres * 0.10;
+            soilVolume = totalVolumeLitres * 0.90;
+        } else {
+            drainVolume = totalVolumeLitres * 0.15;
+            soilVolume = totalVolumeLitres * 0.85;
+        }
 
-            document.getElementById('res-pot').textContent = newDiam;
-            document.getElementById('res-soil').textContent = soilVolume.toFixed(1);
-            document.getElementById('res-drain').textContent = drainVolume.toFixed(1);
+        const nameContainer = document.getElementById('res-plant-name');
+        if (plantName) {
+            nameContainer.textContent = 'для "' + plantName + '"';
+        } else {
+            nameContainer.textContent = '';
+        }
 
-            calcResults.classList.remove('hidden');
-        });
-    }
+        document.getElementById('res-pot').textContent = newDiam;
+        document.getElementById('res-soil').textContent = soilVolume.toFixed(1);
+        document.getElementById('res-drain').textContent = drainVolume.toFixed(1);
+
+        calcResults.classList.remove('hidden');
+    });
+}
 
 //JS Приложение 3
-       const weatherBtn = document.getElementById('get-weather-btn');
-    const weatherResults = document.getElementById('weather-results');
+const moonBtn = document.getElementById('get-moon-btn');
+const moonResults = document.getElementById('moon-results');
 
-    if (weatherBtn && weatherResults) {
-        weatherBtn.addEventListener('click', async function() {
-            weatherBtn.textContent = 'Асинхронный запрос к спутнику...';
-            weatherBtn.disabled = true;
+if (moonBtn && moonResults) {
 
-            try {
-                const response = await fetch('https://open-meteo.com');
-                
-                if (!response.ok) {
-                    throw new Error('Ошибка сети');
-                }
-
-                const data = await response.json();
-                const currentDay = new Date().getDate();
-                let phaseText = '';
-                let tipText = '';
-
-               
-                if (currentDay >= 1 && currentDay <= 7) {
-                    phaseText = 'Растущая Луна';
-                    tipText = 'Растущая Луна. Идеальное время для пересадки комнатных цветов, посадки новых семян и активного полива. Соки движутся вверх.';
-                } else if (currentDay >= 8 && currentDay <= 15) {
-                    phaseText = 'Полнолуние / Убывающая Луна';
-                    tipText = 'Луна на пике или начинает убывать. Энергия уходит в корни. Рекомендуется проводить обрезку сухих листьев и бороться с вредителями.';
-                } else if (currentDay >= 16 && currentDay <= 23) {
-                    phaseText = 'Убывающая Луна';
-                    tipText = 'Убывающая Луна. Идеально для подкормки корневой системы и рыхления почвы. С пересадкой новых растений лучше повременить.';
-                } else {
-                    phaseText = 'Новолуние / Новая Луна';
-                    tipText = 'Период Новолуния. Самый опасный период! Любые пересадки, обрезка и подкормки строго запрещены. Растения уязвимы.';
-                }
-
-               
-                document.getElementById('weather-wind').textContent = phaseText;
-                document.getElementById('weather-tip').textContent = tipText;
-                
-                weatherResults.classList.remove('hidden');
-
-            } catch (error) {
-                alert('Не удалось выполнить асинхронный запрос. Проверьте интернет-соединение.');
-            } finally {
-                weatherBtn.textContent = 'Узнать фазу Луны и советы';
-                weatherBtn.disabled = false;
-            }
-            if (typeof ScrollReveal !== 'undefined') {
-        const sr = ScrollReveal({
-            distance: '40px',
-            duration: 1000,
-            delay: 200,
-            reset: false
-        });
-
+    if (typeof ScrollReveal !== 'undefined') {
+        const sr = ScrollReveal({ distance: '40px', duration: 1000, delay: 200, reset: false });
         sr.reveal('.hero__title, .section-title', { origin: 'top' });
         sr.reveal('.plant-card, .blog-card, .calc-box', { origin: 'bottom', interval: 150 });
     }
-        });
+
+    // Функция расчета возраста Луны
+    function calculateMoonAge(date = new Date()) {
+        let year = date.getFullYear();
+        let month = date.getMonth() + 1;
+        let day = date.getDate();
+
+        if (month < 3) {
+            year--;
+            month += 12;
+        }
+
+        ++month;
+
+        let c = 365.25 * year;
+        let e = 30.6 * month;
+        let jd = c + e + day - 694039.09;
+        jd /= 29.5305882;
+        let b = parseInt(jd);
+        jd -= b;
+        let age = Math.round(jd * 29.53);
+
+        return age;
     }
+
+    moonBtn.addEventListener('click', async function () {
+        moonBtn.textContent = 'Асинхронный запрос к спутнику...';
+        moonBtn.disabled = true;
+
+        try {
+
+            const response = await fetch('https://api.open-meteo.com/v1/forecast?latitude=55.75&longitude=37.61&current_weather=true');
+
+            if (!response.ok) {
+                throw new Error('Ошибка сети');
+            }
+
+            const data = await response.json();
+
+            const age = calculateMoonAge();
+
+            let phaseText = '';
+            let moonIcon = '';
+            let tipText = '';
+
+            if (age < 1.5 || age > 28) {
+                phaseText = 'Новолуние';
+                moonIcon = '🌑';
+                tipText = 'Период Новолуния. Самый опасный период! Любые пересадки, обрезка и подкормки строго запрещены. Растения уязвимы. Разрешен только легкий полив.';
+            } else if (age >= 1.5 && age < 13.5) {
+                phaseText = 'Растущая Луна';
+                moonIcon = '🌙';
+                tipText = 'Растущая Луна. Соки растений движутся вверх к листьям. Идеальное время для пересадки комнатных цветов, посадки новых семян и активного полива.';
+            } else if (age >= 13.5 && age < 16) {
+                phaseText = 'Полнолуние';
+                moonIcon = '🌕';
+                tipText = 'Полнолуние. Корни и листья максимально напитаны энергией, но уязвимы к повреждениям. Избегайте пересадок и обрезки. Рекомендуется поверхностное рыхление почвы.';
+            } else {
+                phaseText = 'Убывающая Луна';
+                moonIcon = '🌘';
+                tipText = 'Убывающая Луна. Энергия и соки уходят вниз к корням. Рекомендуется проводить обрезку сухих листьев, формовку кроны и борьбу с вредителями. С пересадкой новых цветов лучше повременить.';
+            }
+
+            document.getElementById('moon-phase').textContent = phaseText;
+            document.getElementById('moon-icon').textContent = moonIcon;
+            document.getElementById('moon-tip').textContent = tipText;
+            moonResults.classList.remove('hidden');
+
+        } catch (error) {
+            alert('Не удалось выполнить асинхронный запрос. Проверьте интернет-соединение.');
+        } finally {
+            moonBtn.textContent = 'Узнать фазу Луны и советы';
+            moonBtn.disabled = false;
+        }
+    });
+}
